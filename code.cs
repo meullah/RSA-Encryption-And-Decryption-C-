@@ -15,7 +15,6 @@ namespace Project_RSA
                 {
                     Console.WriteLine("INVALID INPUT! PLEASE ENTER A PRIME NUMBER.");
                     return false;
-
                 }
 
             }
@@ -34,7 +33,6 @@ namespace Project_RSA
                     e = i;
                     Console.WriteLine("I have choosed e = " + e);
                     break;
-
                 }
             }
             BigInteger v = 0;
@@ -47,11 +45,9 @@ namespace Project_RSA
                     Console.WriteLine("I have choosed d = " + d);
 
                     break;
-
                 }
                 v = v + 1;
             }
-
         }
         public static char[] map = new char[10] { '!', '@', '#', '$', '%', '^', '&', '*', '(', ')' };
         public static char MappingOfIntegers(int t)
@@ -77,8 +73,6 @@ namespace Project_RSA
 
             return 24; //bug
         }
-
-
         static void Main(string[] args)
         {
             try
@@ -105,10 +99,6 @@ namespace Project_RSA
                 string UserString = Console.ReadLine();
                 // converting string to ASCII bytes
                 byte[] ASCIIbytesInUserString = Encoding.ASCII.GetBytes(UserString);
-                //foreach (byte b in ASCIIbytesInUserString)
-                //{
-                //    Console.WriteLine("ASCII bytes of entered string " + b);
-                //}
                 // new code for all p and q
                 BigInteger[] EncryptedArray = new BigInteger[ASCIIbytesInUserString.Length];
                 BigInteger temp;
@@ -116,50 +106,27 @@ namespace Project_RSA
                 {
                     temp = BigInteger.ModPow(ASCIIbytesInUserString[i], e, n);
                     EncryptedArray[i] = temp;
-                    //Console.WriteLine("big integer result " + temp + " ");
                 }
-                //foreach (BigInteger b in EncryptedArray)
-                //{
-                //    Console.WriteLine("encryption " + b);
-                //}
-
-                //Console.WriteLine("\n=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
-
                 string[] NewMappedEncryptedArray = new string[EncryptedArray.Length];
 
                 for (int i = 0; i < EncryptedArray.Length; i++)
                 {
                     string ETemp = Convert.ToString(EncryptedArray[i]);
-                    //Console.WriteLine("ETemp value: " + ETemp);
                     char[] MappedChar = new char[ETemp.Length];
                     for (int j = 0; j < ETemp.Length; j++)
                     {
                         string ETemp1 = Convert.ToString(ETemp[j]);
-                        //Console.WriteLine(ETemp1);
                         int IntTemp1 = Convert.ToInt16(ETemp1);
-                        MappedChar[j] = MappingOfIntegers(IntTemp1);
-                        //Console.WriteLine("mapped charecters: " + MappedChar[j]);   
+                        MappedChar[j] = MappingOfIntegers(IntTemp1); 
                     }
                     NewMappedEncryptedArray[i] = new string(MappedChar);               
                 }
-
                 Console.WriteLine("\n\n=-=-=-=-=-=-=-=-=-=-=-EnCrYpTeD MeSsAgE=-=-=-=-=-=-=-=-=-=-=-=-=-\n\n");
-                
                 String EncryptedString = string.Join(" ", NewMappedEncryptedArray);
                 Console.WriteLine(EncryptedString);
-
                 // ***************************************Decryption************************************
                 string[] NewDecryptedArray = EncryptedString.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
-
-
-
-
-
-
-
-
                 string[] result = new string[NewDecryptedArray.Length];
-
                 for(int i = 0; i < NewDecryptedArray.Length; i++)
                 {
                     string DTemp = NewDecryptedArray[i];
@@ -173,28 +140,11 @@ namespace Project_RSA
                     }
                     result[i] = string.Join("", ReverseMappedInt); // joing integer array
                 }
-
-                //Console.WriteLine("string conversion");
-
-                //foreach(string s in result)
-                //{
-                //    Console.WriteLine(s);
-                //}
-
                 BigInteger[] DecipheredData = new BigInteger[NewMappedEncryptedArray.Length];
                 for(int i = 0; i < NewMappedEncryptedArray.Length; i++)
                 {
                     DecipheredData[i] = BigInteger.Parse(result[i]);
                 }
-
-
-                //Console.WriteLine("=-=-=-=-=-=-=-=-=-=-=Decipherd Data-=-=-=-=-=-=-=-=-=-=");
-                //foreach(BigInteger b in DecipheredData)
-                //{
-                //    Console.WriteLine("Deciphered Data: " + b);
-                //}
-
-
                 byte[] DecryptedBytes = new byte[ASCIIbytesInUserString.Length];
                 BigInteger temp1;
                 for (int i = 0; i < ASCIIbytesInUserString.Length; i++)
@@ -203,7 +153,6 @@ namespace Project_RSA
                     byte B = (byte)temp1;
                     DecryptedBytes[i] = B;
                 }
-
                 // displaying Decipered text.
                 Console.WriteLine("\n\n<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Deciphered Text>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n\n");
                 string DecryptedString = System.Text.ASCIIEncoding.Default.GetString(DecryptedBytes);
